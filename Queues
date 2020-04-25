@@ -1,0 +1,131 @@
+import UIKit
+
+class Node<Value>{
+    
+    var val:Value
+    var next:Node?
+    
+    init(_ value:Value){
+        self.val = value
+        self.next = nil
+    }
+}
+
+class LinkedList<Value>{
+    var head:Node<Value>?
+    var tail:Node<Value>?
+    private var count = 0
+    
+    private var isListEmpty:Bool {
+        return head == nil
+    }
+    
+    func addAtHead(_ value:Value){
+        let atHead = Node(value)
+        atHead.next = head
+        if count==0 {
+            tail = atHead
+        }
+        head = atHead
+        count = count+1
+        //print("COUNT: \(count)")
+    }
+    
+    func addAtTail(_ value:Value){
+        let last = Node(value)
+        if head == nil {
+            head = last
+            tail = head
+        }else{
+            tail?.next = last
+            tail = tail?.next
+        }
+        count = count+1
+    }
+    
+    func removeAtHead()->Node<Value>?{
+        let current = head
+        head = head?.next
+        count = count-1
+        return current
+    }
+    
+    func getHeadNode()->Node<Value>?{
+        return head
+    }
+    
+    func printElements(){
+        var node = head
+        while node != nil{
+            guard let nod = node else{
+                return
+            }
+            print(" \(nod.val) -> ")
+            node = node?.next
+        }
+    }
+    
+    func isEmpty()->Bool{
+        return isListEmpty
+    }
+    
+    func getSize()->Int{
+        return count
+    }
+    
+}
+
+//var node = LinkedList<Int>()
+//node.addAtHead(20)
+//node.addAtHead(30)
+//node.addAtHead(40)
+//node.addAtTail(60)
+//node.printElements()
+
+class Queue<Value>{
+    
+    private var list = LinkedList<Value>()
+    
+    init(_ val:Value){
+        list.addAtHead(val)
+    }
+    
+    init(){
+        
+    }
+    
+    func enqueue(_ value:Value){
+        list.addAtTail(value)
+    }
+    
+    func dequeue(){
+        list.removeAtHead()
+    }
+    
+    func peek()->Value?{
+        guard let node = list.getHeadNode() else {
+            return nil
+        }
+        return node.val
+    }
+    
+    func size()->Int{
+        return list.getSize()
+    }
+    
+    func printElements(){
+        list.printElements()
+    }
+    
+}
+
+var queue = Queue<Int>()
+queue.enqueue(20)
+queue.enqueue(40)
+queue.enqueue(50)
+queue.printElements()
+print("DEQUEUE: \(queue.dequeue())")
+queue.size()
+queue.printElements()
+print("PEEK: \(queue.peek()!)")
+
