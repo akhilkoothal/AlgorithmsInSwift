@@ -1,0 +1,46 @@
+struct Stack<Value>{
+    private var elements = [Value]()
+    
+    mutating func push(_ value:Value){
+        elements.append(value)
+    }
+    
+    mutating func pop()->Value?{
+        if elements.count == 0{
+            return nil
+        }
+        return elements.remove(at: elements.count-1)
+    }
+    
+    func peek()->Value?{
+        if elements.count == 0 {
+            return nil
+        }
+        return elements[elements.count-1]
+    }
+    
+    func isEmpty()->Bool{
+        return elements.count == 0
+    }
+    
+    func printElements(){
+        for element in elements {
+            print(" \(element) ")
+        }
+    }
+}
+
+var stack = Stack<Int>()
+
+stack.push(20)
+stack.push(40)
+stack.push(60)
+
+if let peek = stack.peek(){
+    print("PEEK VALUE: \(peek)")
+}
+
+stack.pop()
+
+stack.printElements()
+print("IS STACK EMPTY: \(stack.isEmpty())")
